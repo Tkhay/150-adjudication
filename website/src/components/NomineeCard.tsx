@@ -20,8 +20,8 @@ export function NomineeCard({
           <p className="text-sm text-neutral-500">Nominated by {nominee.nominator_name}</p>
         )}
         {evidenceCount > 0 && (
-          <p className="mt-1 text-xs text-neutral-400">
-            📎 {evidenceCount} supporting {evidenceCount === 1 ? 'item' : 'items'}
+          <p className="mt-1 text-xs text-neutral-500">
+            {evidenceCount} supporting {evidenceCount === 1 ? 'item' : 'items'}
           </p>
         )}
       </div>

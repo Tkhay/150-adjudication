@@ -11,7 +11,7 @@ export function CategoryCard({ category }: { category: Category }) {
       <p className="mt-1 text-sm text-neutral-500">
         {category.count} {category.count === 1 ? 'nominee' : 'nominees'}
       </p>
-      <p className="mt-3 text-sm font-medium text-red-700">View Nominees →</p>
+      <p className="mt-3 text-sm font-medium text-red-700">View Nominees</p>
     </Link>
   )
 }
