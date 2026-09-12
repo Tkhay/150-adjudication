@@ -23,7 +23,7 @@ export function CategoryPage({ data }: { data: AwardsData }) {
     <div className="space-y-6">
       <div>
         <Link to="/" className="text-sm font-medium text-red-700 hover:underline">
-          ‹ Back to Categories
+          Back to Categories
         </Link>
         <h1 className="mt-2 text-2xl font-bold text-neutral-900">{categoryName}</h1>
         <p className="mt-1 text-sm text-neutral-500">

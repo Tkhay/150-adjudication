@@ -18,9 +18,9 @@ export function PrevNextNav({
       {prevId ? (
         <Link
           to={`/category/${categorySlug}/nominee/${prevId}`}
-          className="text-sm font-medium text-red-700 hover:underline"
+          className="text-sm font-medium text-neutral-800 hover:underline"
         >
-          ‹ Previous
+          Previous
         </Link>
       ) : (
         <span />
@@ -31,9 +31,9 @@ export function PrevNextNav({
       {nextId ? (
         <Link
           to={`/category/${categorySlug}/nominee/${nextId}`}
-          className="text-sm font-medium text-red-700 hover:underline"
+          className="text-sm font-medium text-neutral-800 hover:underline"
         >
-          Next ›
+          Next
         </Link>
       ) : (
         <span />

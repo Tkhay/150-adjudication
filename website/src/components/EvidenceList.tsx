@@ -5,27 +5,85 @@ import { Lightbox } from './Lightbox'
 
 export function EvidenceList({ evidence }: { evidence: Evidence[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-  const images = evidence.filter((e) => e.kind === 'image')
 
   if (evidence.length === 0) {
-    return <p className="text-sm text-neutral-500">No supporting evidence submitted for this nomination.</p>
+    return (
+      <div className="rounded-xl border border-dashed border-neutral-300 bg-white p-6 text-center text-sm text-neutral-500">
+        No supporting evidence or attachments submitted for this nomination.
+      </div>
+    )
   }
 
+  const documents = evidence.filter((e) => e.kind === 'document')
+  const images = evidence.filter((e) => e.kind === 'image')
+  const videos = evidence.filter((e) => e.kind === 'video')
+  const links = evidence.filter((e) => e.kind === 'external_link')
+
+  const showSubheaders = [documents.length > 0, images.length > 0 || videos.length > 0, links.length > 0].filter(Boolean).length > 1
+
   return (
-    <>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        {evidence.map((item, i) => (
-          <EvidenceItem
-            key={`${item.url}-${i}`}
-            evidence={item}
-            onOpenImage={
-              item.kind === 'image'
-                ? () => setLightboxIndex(images.findIndex((img) => img.url === item.url))
-                : undefined
-            }
-          />
-        ))}
-      </div>
+    <div className="space-y-6">
+      {/* Documents */}
+      {documents.length > 0 && (
+        <div className="space-y-3">
+          {showSubheaders && (
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+              Documents & Statements ({documents.length})
+            </h3>
+          )}
+          <div className="space-y-3">
+            {documents.map((item, i) => (
+              <EvidenceItem key={`doc-${item.url}-${i}`} evidence={item} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Media (Images & Videos) */}
+      {(images.length > 0 || videos.length > 0) && (
+        <div className="space-y-3">
+          {showSubheaders && (
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+              Media & Photographs ({images.length + videos.length})
+            </h3>
+          )}
+          {images.length > 0 && (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+              {images.map((item) => (
+                <EvidenceItem
+                  key={`img-${item.url}`}
+                  evidence={item}
+                  onOpenImage={() => setLightboxIndex(images.findIndex((img) => img.url === item.url))}
+                />
+              ))}
+            </div>
+          )}
+          {videos.length > 0 && (
+            <div className="space-y-3">
+              {videos.map((item, i) => (
+                <EvidenceItem key={`vid-${item.url}-${i}`} evidence={item} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* External Links */}
+      {links.length > 0 && (
+        <div className="space-y-3">
+          {showSubheaders && (
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+              External References ({links.length})
+            </h3>
+          )}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {links.map((item, i) => (
+              <EvidenceItem key={`link-${item.url}-${i}`} evidence={item} />
+            ))}
+          </div>
+        </div>
+      )}
+
       {lightboxIndex !== null && (
         <Lightbox
           images={images}
@@ -34,6 +92,7 @@ export function EvidenceList({ evidence }: { evidence: Evidence[] }) {
           onNavigate={setLightboxIndex}
         />
       )}
-    </>
+    </div>
   )
 }
+

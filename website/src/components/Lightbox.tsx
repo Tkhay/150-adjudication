@@ -53,9 +53,9 @@ export function Lightbox({
                 onNavigate(index - 1)
               }}
               aria-label="Previous image"
-              className="absolute left-4 rounded-full bg-white/90 px-3 py-2 text-lg font-medium text-neutral-900"
+              className="absolute left-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-neutral-900"
             >
-              ‹
+              Previous
             </button>
           )}
           {index < images.length - 1 && (
@@ -66,9 +66,9 @@ export function Lightbox({
                 onNavigate(index + 1)
               }}
               aria-label="Next image"
-              className="absolute right-4 rounded-full bg-white/90 px-3 py-2 text-lg font-medium text-neutral-900"
+              className="absolute right-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-neutral-900"
             >
-              ›
+              Next
             </button>
           )}
         </>
