@@ -12,6 +12,12 @@ const destDir = join(__dirname, '..', 'public', 'data')
 const dest = join(destDir, 'awards.json')
 
 if (!existsSync(source)) {
+  if (existsSync(dest)) {
+    // e.g. a Vercel build: output/ isn't checked out, but the last synced
+    // copy is committed at public/data/awards.json -- build with that.
+    console.log(`${source} not found; using committed ${dest} as-is.`)
+    process.exit(0)
+  }
   console.error(
     `\nCould not find ${source}\nRun prepare_awards.py first to generate output/awards.json.\n`
   )

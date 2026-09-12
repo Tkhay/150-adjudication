@@ -12,9 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Generated copy of ../output/awards.json -- never hand-edit, re-run `npm run sync-data`
-public/data/awards.json
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
