@@ -3,7 +3,8 @@ import {
   cleanFilename,
   getDomain,
   getFileExtension,
-  isPdf,
+  getPreviewUrl,
+  isPreviewable,
 } from '../lib/evidence'
 import type { Evidence } from '../data/types'
 
@@ -14,10 +15,11 @@ export function EvidenceItem({
   evidence: Evidence
   onOpenImage?: () => void
 }) {
-  const [showPdfPreview, setShowPdfPreview] = useState(false)
+  const [showPreview, setShowPreview] = useState(false)
   const cleanTitle = cleanFilename(evidence.filename)
   const ext = getFileExtension(evidence.filename)
-  const isPdfDoc = isPdf(evidence.filename)
+  const canPreview = isPreviewable(evidence.filename)
+  const previewUrl = getPreviewUrl(evidence.url, evidence.filename)
 
   if (evidence.kind === 'image') {
     return (
@@ -80,13 +82,13 @@ export function EvidenceItem({
           </div>
 
           <div className="flex flex-wrap items-center gap-2 pt-1 sm:pt-0">
-            {isPdfDoc && (
+            {canPreview && (
               <button
                 type="button"
-                onClick={() => setShowPdfPreview(!showPdfPreview)}
+                onClick={() => setShowPreview(!showPreview)}
                 className="rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50"
               >
-                {showPdfPreview ? 'Hide Preview' : 'Preview Inline'}
+                {showPreview ? 'Hide Preview' : 'Preview Inline'}
               </button>
             )}
             <a
@@ -100,10 +102,10 @@ export function EvidenceItem({
           </div>
         </div>
 
-        {isPdfDoc && showPdfPreview && (
+        {canPreview && showPreview && (
           <div className="mt-4 overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">
             <div className="flex items-center justify-between border-b border-neutral-200 bg-neutral-200/60 px-3 py-1.5 text-xs text-neutral-600">
-              <span>PDF Document Preview</span>
+              <span>Document Preview</span>
               <a
                 href={evidence.url}
                 target="_blank"
@@ -114,7 +116,7 @@ export function EvidenceItem({
               </a>
             </div>
             <iframe
-              src={evidence.url}
+              src={previewUrl}
               title={cleanTitle}
               className="h-[75vh] w-full"
             />

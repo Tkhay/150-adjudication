@@ -7,6 +7,17 @@ export function isWordDoc(filename: string | undefined | null): boolean {
   return lower.endsWith('.docx') || lower.endsWith('.doc')
 }
 
+export function isPreviewable(filename: string | undefined | null): boolean {
+  return isPdf(filename) || isWordDoc(filename)
+}
+
+export function getPreviewUrl(url: string, filename: string | undefined | null): string {
+  if (isWordDoc(filename)) {
+    return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`
+  }
+  return url
+}
+
 export function getFileExtension(filename?: string | null): string {
   if (!filename) return ''
   const parts = filename.split('.')
